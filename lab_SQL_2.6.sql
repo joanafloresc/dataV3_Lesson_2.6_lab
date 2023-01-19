@@ -27,6 +27,7 @@ SELECT round(AVG(length),2)  AS average_length, rating FROM sakila.film
 GROUP BY rating HAVING average_length > 120;
 
 -- 8. Rank films by length (filter out the rows that have nulls or 0s in length column). In your output, only select the columns title, length, and the rank.
-SELECT title, length, length AS ranking FROM sakila.film
+SELECT title, length, 
+RANK() OVER (ORDER BY length DESC) AS 'rank' 
+FROM sakila.film
 WHERE length IS NOT NULL AND length NOT LIKE '%0%'
-ORDER BY ranking DESC;
